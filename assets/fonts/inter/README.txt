@@ -1,0 +1,1 @@
+Inter font files are served via Google Fonts for performance. Place offline font files here if you plan to self-host.
