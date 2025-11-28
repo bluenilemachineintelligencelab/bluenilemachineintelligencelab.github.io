@@ -1,0 +1,21 @@
+<svg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'>
+  <defs>
+    <linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' stop-color='#1F6FEB' />
+      <stop offset='100%' stop-color='#00C2FF' />
+    </linearGradient>
+  </defs>
+  <rect width='120' height='120' rx='16' ry='16' fill='url(#grad)' opacity='0.85'/>
+  <g fill='none' stroke='rgba(255,255,255,0.6)' stroke-width='1'>
+    <path d='M20 0v120'/>
+    <path d='M40 0v120'/>
+    <path d='M60 0v120'/>
+    <path d='M80 0v120'/>
+    <path d='M100 0v120'/>
+    <path d='M0 20h120'/>
+    <path d='M0 40h120'/>
+    <path d='M0 60h120'/>
+    <path d='M0 80h120'/>
+    <path d='M0 100h120'/>
+  </g>
+</svg>

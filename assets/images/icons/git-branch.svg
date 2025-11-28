@@ -1,0 +1,8 @@
+<svg width='64' height='64' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'>
+  <rect width='64' height='64' rx='16' fill='rgba(10,26,63,0.08)'/>
+  <circle cx='20' cy='20' r='8' fill='#1F6FEB'/>
+  <circle cx='44' cy='44' r='8' fill='#00C2FF'/>
+  <circle cx='44' cy='20' r='6' fill='#4285F4'/>
+  <path d='M20 28v12a12 12 0 0012 12h0' stroke='#0A1A3F' stroke-width='3' fill='none'/>
+  <path d='M32 24h8v16' stroke='#0A1A3F' stroke-width='3' fill='none'/>
+</svg>

@@ -1,0 +1,11 @@
+<svg width='64' height='64' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'>
+  <defs>
+    <linearGradient id='brain' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' stop-color='#1F6FEB'/>
+      <stop offset='100%' stop-color='#00C2FF'/>
+    </linearGradient>
+  </defs>
+  <rect width='64' height='64' rx='16' fill='rgba(31,111,235,0.08)'/>
+  <path d='M20 20c0-5 4-9 9-9h6c5 0 9 4 9 9v24c0 5-4 9-9 9h-6c-5 0-9-4-9-9V20z' fill='url(#brain)'/>
+  <path d='M24 24h16M24 32h16M24 40h16' stroke='#fff' stroke-width='2' stroke-linecap='round' opacity='0.8'/>
+</svg>
