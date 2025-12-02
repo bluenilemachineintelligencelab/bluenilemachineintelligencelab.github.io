@@ -1,4 +1,3 @@
-=======
 # Blue Nile Machine Intelligence Lab Website
 
 A responsive, modern landing page for the Blue Nile Machine Intelligence Lab (BNMIL). The site is built with semantic HTML, modular CSS, and vanilla JavaScript to deliver a fast, accessible experience.
