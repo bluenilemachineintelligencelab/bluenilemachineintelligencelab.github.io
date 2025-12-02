@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# bluenilemachineintelligencelab.github.io
-Blue Nile Machine Intelligence Lab Website
 =======
 # Blue Nile Machine Intelligence Lab Website
 
@@ -43,5 +40,4 @@ Blue-Nile-Machine-Intelligent-Lab-website/
 
 ## License
 
-MIT  Blue Nile Machine Intelligence Lab
->>>>>>> e377669 (Add project overview documentation)
+MIT  
