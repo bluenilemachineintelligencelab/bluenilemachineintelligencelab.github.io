@@ -523,6 +523,165 @@
       }
     });
   </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if user is already logged in
+        const isLoggedIn = sessionStorage.getItem('isAuthenticated') === 'true';
+        
+        // Get the login modal and form elements
+        const loginModal = document.createElement('div');
+        loginModal.id = 'loginModal';
+        loginModal.style.display = 'none';
+        loginModal.style.position = 'fixed';
+        loginModal.style.top = '0';
+        loginModal.style.left = '0';
+        loginModal.style.width = '100%';
+        loginModal.style.height = '100%';
+        loginModal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+        loginModal.style.zIndex = '1000';
+        loginModal.style.display = 'flex';
+        loginModal.style.justifyContent = 'center';
+        loginModal.style.alignItems = 'center';
+        
+        // Create login form
+        loginModal.innerHTML = `
+            <div style="background: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 400px;">
+                <h3 style="margin-top: 0; color: #333;">Admin Login</h3>
+                <div id="loginError" style="color: red; margin-bottom: 15px; display: none;">
+                    Invalid email or password. Please try again.
+                </div>
+                <div class="form-group">
+                    <label for="loginEmail" style="color: #333; font-weight: bold;">Email:</label>
+                    <input type="email" id="loginEmail" class="form-control" style="width: 100%; padding: 8px; margin: 5px 0 15px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword" style="color: #333; font-weight: bold;">Password:</label>
+                    <input type="password" id="loginPassword" class="form-control" style="width: 100%; padding: 8px; margin: 5px 0 15px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                    <button id="cancelLogin" class="btn" style="background-color: #6c757d; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Cancel</button>
+                    <button id="loginBtn" class="btn" style="background-color: #008080; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Login</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(loginModal);
+        
+        // Initially hide the login modal
+        loginModal.style.display = 'none';
+        
+        // Get the edit event button
+        const editEventBtn = document.getElementById('editEventBtn');
+        const eventForm = document.getElementById('eventForm');
+        
+        // Show login modal when edit button is clicked
+        if (editEventBtn) {
+            editEventBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (!isLoggedIn) {
+                    loginModal.style.display = 'flex';
+                    document.getElementById('loginError').style.display = 'none';
+                } else {
+                    eventForm.style.display = eventForm.style.display === 'block' ? 'none' : 'block';
+                }
+            });
+        }
+        
+        // Handle login
+        const loginBtn = document.getElementById('loginBtn');
+        if (loginBtn) {
+            loginBtn.addEventListener('click', function() {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                // Check credentials
+                if (email === 'bluenilemachineintelligencelab@gmail.com' && password === 'DataScience@2026') {
+                    // Successful login
+                    sessionStorage.setItem('isAuthenticated', 'true');
+                    loginModal.style.display = 'none';
+                    eventForm.style.display = 'block';
+                } else {
+                    // Show error
+                    document.getElementById('loginError').style.display = 'block';
+                }
+            });
+        }
+        
+        // Handle cancel login
+        const cancelLogin = document.getElementById('cancelLogin');
+        if (cancelLogin) {
+            cancelLogin.addEventListener('click', function() {
+                loginModal.style.display = 'none';
+            });
+        }
+        
+        // Close modal when clicking outside the form
+        loginModal.addEventListener('click', function(e) {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        });
+        
+        // Handle form submission
+        const saveEventBtn = document.getElementById('saveEventBtn');
+        if (saveEventBtn) {
+            saveEventBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const eventTitle = document.getElementById('eventTitle').value;
+                const eventDate = document.getElementById('eventDate').value;
+                const eventDescription = document.getElementById('eventDescription').value;
+                const eventAudience = document.getElementById('eventAudience').value;
+                const eventOrganizer = document.getElementById('eventOrganizer').value;
+                
+                // Update the event display
+                const eventTitleElement = document.querySelector('.events-content h2');
+                const eventDescriptionElement = document.querySelector('.events-content > p:not(.eyebrow)');
+                
+                if (eventTitleElement) eventTitleElement.textContent = eventTitle;
+                if (eventDescriptionElement) eventDescriptionElement.textContent = eventDescription;
+                
+                // Update the event meta info
+                if (eventDate) {
+                    const eventDateFormatted = new Date(eventDate).toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    });
+                    
+                    const badgeElement = document.querySelector('.events-meta .badge');
+                    if (badgeElement) {
+                        badgeElement.textContent = `Status: Upcoming on ${eventDateFormatted}`;
+                    }
+                }
+                
+                const audienceElement = document.querySelector('.events-meta span:nth-child(2)');
+                const organizerElement = document.querySelector('.events-meta span:last-child');
+                
+                if (audienceElement) audienceElement.textContent = `Target Audience: ${eventAudience}`;
+                if (organizerElement) organizerElement.textContent = `Organizer: ${eventOrganizer}`;
+                
+                // Hide the form
+                eventForm.style.display = 'none';
+                
+                alert('Event updated successfully!');
+                
+                // Note: In a production environment, you would send this data to a server here
+                // to persist the changes for all users
+            });
+        }
+        
+        // Handle cancel button
+        const cancelEditBtn = document.getElementById('cancelEditBtn');
+        if (cancelEditBtn) {
+            cancelEditBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                eventForm.style.display = 'none';
+            });
+        }
+    });
+  </script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
