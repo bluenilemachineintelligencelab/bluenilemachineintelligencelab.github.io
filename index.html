@@ -156,15 +156,52 @@
               <li>How to contribute to open-source projects</li>
             </ul>
             <div class="events-meta">
-              <span class="badge">Status: Coming soon</span>
+              <span class="badge">Status: Ended on December 6th, 2024</span>
               <span>Target Audience: Beginners &amp; intermediate students</span>
               <span>Organizer: Blue Nile Machine Intelligence Lab</span>
             </div>
           </div>
           <div class="events-cta">
-            <img src="assets/images/features/pattern-grid.svg" alt="Decorative pattern" />
-            <p>Join the waitlist to reserve your seat.</p>
-            <a class="btn btn-primary" href="#contact">Join the waitlist</a>
+            <button id="editEventBtn" class="btn" style="margin-bottom: 15px; background-color: #008080; border: none; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 20px; transition: all 0.3s ease;">
+              <i class="fas fa-edit" style="margin-right: 8px;"></i> Add/Edit Event
+            </button>
+            <style>
+              #editEventBtn:hover {
+                background-color: #006666 !important;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+              }
+              #editEventBtn:active {
+                transform: translateY(0);
+              }
+            </style>
+            <div id="eventForm" style="display: none; background: #f5f5f5; border-radius: 8px; padding: 15px; margin-top: 10px;">
+              <h4>Add/Edit Event</h4>
+              <div class="form-group">
+                <label for="eventTitle">Event Title</label>
+                <input type="text" id="eventTitle" class="form-control" value="Introduction to Git and GitHub Workshop">
+              </div>
+              <div class="form-group">
+                <label for="eventDate">Event Date</label>
+                <input type="date" id="eventDate" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="eventDescription">Description</label>
+                <textarea id="eventDescription" class="form-control" rows="4">A beginner-friendly hands-on workshop designed to help students understand the fundamentals of Git, GitHub, and version control.</textarea>
+              </div>
+              <div class="form-group">
+                <label for="eventAudience">Target Audience</label>
+                <input type="text" id="eventAudience" class="form-control" value="Beginners & intermediate students">
+              </div>
+              <div class="form-group">
+                <label for="eventOrganizer">Organizer</label>
+                <input type="text" id="eventOrganizer" class="form-control" value="Blue Nile Machine Intelligence Lab">
+              </div>
+              <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button id="saveEventBtn" class="btn" style="background-color: #008080; border: none; font-weight: 600; padding: 8px 20px;">Save Changes</button>
+                <button id="cancelEditBtn" class="btn btn-secondary" style="background-color: #6c757d; border: none; font-weight: 500; padding: 8px 20px;">Cancel</button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -370,6 +407,122 @@
   </div>
   <script src="assets/js/navbar.js"></script>
   <script src="assets/js/animations.js"></script>
+  <script>
+    // Event Management Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const editBtn = document.getElementById('editEventBtn');
+      const eventForm = document.getElementById('eventForm');
+      const saveBtn = document.getElementById('saveEventBtn');
+      const cancelBtn = document.getElementById('cancelEditBtn');
+      
+      // Load saved event data from localStorage
+      function loadEventData() {
+        const savedEvent = JSON.parse(localStorage.getItem('savedEvent'));
+        if (savedEvent) {
+          updateEventDisplay(savedEvent);
+        }
+      }
+      
+      // Update the DOM with event data
+      function updateEventDisplay(eventData) {
+        const eventTitle = document.querySelector('.events-content h2');
+        const eventDescription = document.querySelector('.events-content > p');
+        const eventStatus = document.querySelector('.events-meta .badge');
+        const eventAudience = document.querySelectorAll('.events-meta span')[1];
+        const eventOrganizer = document.querySelectorAll('.events-meta span')[2];
+        
+        if (eventTitle) eventTitle.textContent = eventData.title;
+        if (eventDescription) eventDescription.textContent = eventData.description;
+        if (eventAudience) eventAudience.textContent = `Target Audience: ${eventData.audience}`;
+        if (eventOrganizer) eventOrganizer.textContent = `Organizer: ${eventData.organizer}`;
+        
+        if (eventData.date) {
+          const eventDate = new Date(eventData.date);
+          const today = new Date();
+          const formattedDate = eventDate.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          });
+          
+          if (eventDate > today) {
+            eventStatus.textContent = `Upcoming: ${formattedDate}`;
+          } else if (eventDate.toDateString() === today.toDateString()) {
+            eventStatus.textContent = 'Happening Today!';
+          } else {
+            eventStatus.textContent = `Ended on ${formattedDate}`;
+          }
+        } else {
+          eventStatus.textContent = 'Date not set';
+        }
+      }
+      
+      // Initialize form with current event data
+      function initializeForm() {
+        const eventTitle = document.querySelector('.events-content h2').textContent;
+        const eventDescription = document.querySelector('.events-content > p').textContent;
+        const eventAudience = document.querySelectorAll('.events-meta span')[1].textContent;
+        const eventOrganizer = document.querySelectorAll('.events-meta span')[2].textContent;
+        
+        document.getElementById('eventTitle').value = eventTitle;
+        document.getElementById('eventDescription').value = eventDescription;
+        document.getElementById('eventAudience').value = eventAudience.replace('Target Audience: ', '');
+        document.getElementById('eventOrganizer').value = eventOrganizer.replace('Organizer: ', '');
+      }
+      
+      if (editBtn) {
+        editBtn.addEventListener('click', function() {
+          initializeForm();
+          eventForm.style.display = 'block';
+          editBtn.style.display = 'none';
+        });
+      }
+      
+      if (cancelBtn) {
+        cancelBtn.addEventListener('click', function() {
+          eventForm.style.display = 'none';
+          editBtn.style.display = 'block';
+        });
+      }
+      
+      // Load saved data when page loads
+      loadEventData();
+      
+      if (saveBtn) {
+        saveBtn.addEventListener('click', function() {
+          // Get form values
+          const title = document.getElementById('eventTitle').value;
+          const date = document.getElementById('eventDate').value;
+          const description = document.getElementById('eventDescription').value;
+          const audience = document.getElementById('eventAudience').value;
+          const organizer = document.getElementById('eventOrganizer').value;
+          
+          // Create event object
+          const eventData = {
+            title: title,
+            date: date,
+            description: description,
+            audience: audience,
+            organizer: organizer,
+            lastUpdated: new Date().toISOString()
+          };
+          
+          // Save to localStorage
+          localStorage.setItem('savedEvent', JSON.stringify(eventData));
+          
+          // Update the display
+          updateEventDisplay(eventData);
+          
+          // Hide the form after saving
+          eventForm.style.display = 'none';
+          editBtn.style.display = 'block';
+          
+          // Show success message
+          alert('Event updated successfully! Changes have been saved permanently.');
+        });
+      }
+    });
+  </script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
