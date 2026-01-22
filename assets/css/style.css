@@ -44,6 +44,17 @@ body.nav-open::after {
   z-index: 998;
 }
 
+/* Safety: never allow a stuck mobile scroll-lock to break desktop scrolling */
+@media (min-width: 1025px) {
+  body.nav-open {
+    overflow: auto;
+  }
+
+  body.nav-open::after {
+    display: none;
+  }
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -286,6 +297,16 @@ ul {
   width: 100%;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
+}
+
+.hero-logo {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  transform: scale(1.1);
+  transform-origin: center right;
+  filter: drop-shadow(var(--shadow-md));
 }
 
 .media-card {

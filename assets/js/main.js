@@ -1,11 +1,25 @@
 (function () {
   const initSmoothScroll = () => {
+    const nav = document.querySelector('.primary-nav');
+    const navHeight = nav ? nav.offsetHeight : 0;
+    const scrollOffset = navHeight + 20; // Add 20px padding
+
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener('click', (event) => {
-        const target = document.querySelector(anchor.getAttribute('href'));
+        const href = anchor.getAttribute('href');
+        if (href === '#') return;
+        
+        const target = document.querySelector(href);
         if (!target) return;
+        
         event.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
+        
+        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - scrollOffset;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
       });
     });
   };
@@ -15,20 +29,60 @@
     const navLinks = document.querySelectorAll('.primary-nav a[href^="#"]');
     if (!sections.length || !navLinks.length) return;
 
+    const nav = document.querySelector('.primary-nav');
+    const navHeight = nav ? nav.offsetHeight : 0;
+    const scrollOffset = navHeight + 100; // Offset for better detection
+
+    const updateActiveLink = () => {
+      let current = '';
+      const scrollPosition = window.scrollY + scrollOffset;
+
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          current = `#${section.id}`;
+        }
+      });
+
+      navLinks.forEach((link) => {
+        const href = link.getAttribute('href');
+        link.classList.toggle('active', href === current);
+      });
+    };
+
+    // Use IntersectionObserver for better performance
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const activeId = `#${entry.target.id}`;
-          navLinks.forEach((link) => {
-            link.classList.toggle('active', link.getAttribute('href') === activeId);
-          });
+          if (entry.isIntersecting) {
+            updateActiveLink();
+          }
         });
       },
-      { rootMargin: '-40% 0px -40% 0px' }
+      { 
+        rootMargin: `-${scrollOffset}px 0px -60% 0px`,
+        threshold: 0.1
+      }
     );
 
     sections.forEach((section) => observer.observe(section));
+    
+    // Also update on scroll for better accuracy
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActiveLink();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Initial update
+    updateActiveLink();
   };
 
   const setCurrentYear = () => {
