@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events - Blue Nile Machine Intelligence Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="photos/logo.png" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/animations.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <style>
+        .events-page-header {
+            padding: 10rem 2rem 6rem;
+            background: linear-gradient(135deg, rgba(31, 111, 235, 0.05), rgba(0, 194, 255, 0.05));
+            text-align: center;
+        }
+
+        .linkedin-link-compact {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #0077b5;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .linkedin-link-compact:hover {
+            color: #00a0dc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-shell">
+        <header>
+            <nav class="primary-nav" aria-label="Primary">
+                <div class="nav-brand">
+                    <img src="photos/logo.png" alt="BNMIL logo" class="logo" />
+                    <div class="brand-text">
+                        <span>Blue Nile</span>
+                        <span>Machine Intelligence Lab</span>
+                    </div>
+                </div>
+                <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="index.html#hero">Home</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#features">Offerings</a></li>
+                    <li><a href="index.html#team">Team</a></li>
+                    <li><a href="index.html#events" class="active">Events</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a class="btn btn-primary btn-compact" href="index.html#contact">Join BNMIL</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="main-content">
+            <div class="events-page-header">
+                <p class="eyebrow" data-animate="fade-up">BNMIL Community</p>
+                <h1 data-animate="fade-up" data-animate-delay="100">Our Events & Workshops</h1>
+                <p class="lead" data-animate="fade-up" data-animate-delay="200">Exploring the frontier of AI together
+                    through hands-on learning and research.</p>
+            </div>
+
+            <section id="upcoming" class="section">
+                <div class="events-subsection" data-animate="fade-up">
+                    <h3 class="subsection-title">Upcoming Events</h3>
+                    <div class="events-grid">
+                        <!-- Upcoming Event: Colab & Kaggle Workshop -->
+                        <div class="events-card upcoming-event" data-animate="fade-up">
+                            <div class="events-gallery-side">
+                                <div class="featured-image-container">
+                                    <div class="blur-bg"
+                                        style="background-image: url('photos/Events/workshop/ermi.jpg');"></div>
+                                    <img src="photos/Events/workshop/ermi.jpg" class="featured-image"
+                                        alt="BNMIL Hands-On Workshop: Google Colab & Kaggle Tools">
+                                </div>
+                                <div class="thumbnails-row">
+                                    <img src="photos/Events/workshop/ermi.jpg" class="thumb-img active"
+                                        alt="Workshop Poster">
+                                    <img src="photos/Ermiyas.jpeg" class="thumb-img" alt="Facilitator: Ermiyas Gulma">
+                                </div>
+                            </div>
+                            <div class="events-content">
+                                <p class="eyebrow">Technical Workshop</p>
+                                <h2>BNMIL Hands-On Workshop: Google Colab & Kaggle Tools</h2>
+                                <p>BNMIL is hosting a hands-on workshop designed for 2nd & 3rd Year Data Science
+                                    students, focused on practical tools used in real-world data science workflows.</p>
+
+                                <div class="speaker-bio" style="margin-top: 1.5rem;">
+                                    <h3>Facilitator</h3>
+                                    <div class="speaker-info">
+                                        <strong>Ermiyas Gulma Tefera</strong>
+                                        <p>Machine Learning Engineer / Data Scientist at BNMIL. Expert in student
+                                            mentorship and guidance on data-driven projects.</p>
+                                        <a href="https://www.linkedin.com/in/ermiya-gulma-b092a7373/" target="_blank"
+                                            rel="noopener noreferrer" class="linkedin-link-compact">View LinkedIn
+                                            Profile &rarr;</a>
+                                    </div>
+                                </div>
+
+                                <div class="learning-objectives" style="margin-top: 1.5rem;">
+                                    <h3>What You’ll Learn:</h3>
+                                    <ul class="events-list">
+                                        <li>How to use Google Colab effectively</li>
+                                        <li>How to explore Kaggle for practice and collaboration</li>
+                                        <li>How to build practical data science skills</li>
+                                    </ul>
+                                </div>
+
+                                <div class="event-actions" style="margin-top: 2rem;">
+                                    <a href="https://forms.gle/jqWb5PLpAyfMMYmt5" target="_blank"
+                                        rel="noopener noreferrer" class="btn btn-primary">Register Now</a>
+                                    <span
+                                        style="font-size: 0.85rem; color: var(--neutral-400); display: block; margin-top: 0.5rem; font-style: italic;">Required
+                                        — Limited slots (first come, first served)</span>
+                                </div>
+                            </div>
+                            <div class="events-meta">
+                                <div class="meta-item"><span class="badge">Status: Upcoming</span></div>
+                                <div class="meta-item"><span class="meta-label">Date:</span> <span
+                                        class="meta-value">January 31 | 9:00 AM (3:00 LT)</span></div>
+                                <div class="meta-item"><span class="meta-label">Location:</span> <span
+                                        class="meta-value">Law Building, Lab 201</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="past" class="section">
+                <div class="events-subsection" data-animate="fade-up">
+                    <h3 class="subsection-title">Past Highlights</h3>
+                    <div class="events-grid">
+
+                        <!-- Event 1: Git Workshop -->
+                        <div class="events-card past-event" data-animate="fade-up">
+                            <div class="events-gallery-side">
+                                <div class="featured-image-container">
+                                    <div class="blur-bg"
+                                        style="background-image: url('photos/Events/Git %26 Github/ppl.jpg');"></div>
+                                    <img src="photos/Events/Git %26 Github/ppl.jpg" class="featured-image"
+                                        alt="Git Workshop Participants">
+                                </div>
+                                <div class="thumbnails-row">
+                                    <img src="photos/Events/Git %26 Github/ppl.jpg" class="thumb-img active"
+                                        alt="Participants">
+                                    <img src="photos/Events/Git %26 Github/Mr.antx.jpg" class="thumb-img"
+                                        alt="Speaker presenting">
+                                    <img src="photos/Events/Git %26 Github/hab 1.jpg" class="thumb-img"
+                                        alt="Hands-on session">
+                                    <img src="photos/Events/Git %26 Github/bela.jpg" class="thumb-img"
+                                        alt="Collaboration">
+                                    <img src="photos/Events/Git %26 Github/ppl 2.jpg" class="thumb-img"
+                                        alt="Group Discussion">
+                                </div>
+                            </div>
+                            <div class="events-content">
+                                <p class="eyebrow">Technical Workshop</p>
+                                <h2>Introduction to Git and GitHub Workshop</h2>
+                                <p>A beginner-friendly hands-on workshop designed to help students understand the
+                                    fundamentals of Git, GitHub, and version control.</p>
+                                <div class="event-actions" style="margin-bottom: 2rem;">
+                                    <a href="https://t.me/BLMIL_DS2026/19" target="_blank" rel="noopener noreferrer"
+                                        class="btn btn-primary btn-compact">Get Material</a>
+                                </div>
+                            </div>
+                            <div class="events-meta">
+                                <div class="meta-item"><span class="badge badge-completed">Completed</span></div>
+                                <div class="meta-item"><span class="meta-label">Date:</span> <span
+                                        class="meta-value">Dec 6, 2025</span></div>
+                                <div class="meta-item"><span class="meta-label">Audience:</span> <span
+                                        class="meta-value">Beginners</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Event 2: Addis Talk -->
+                        <div class="events-card past-event" data-animate="fade-up">
+                            <div class="events-gallery-side">
+                                <div class="featured-image-container">
+                                    <div class="blur-bg"
+                                        style="background-image: url('photos/Events/Guest%20Talk/Addis.jpg');"></div>
+                                    <img src="photos/Events/Guest%20Talk/Addis.jpg" class="featured-image"
+                                        alt="Addis Alemayehu at BNMIL">
+                                </div>
+                            </div>
+                            <div class="events-content">
+                                <p class="eyebrow">BNMIL Guest Talk</p>
+                                <h2>Career Journey After Graduation</h2>
+                                <p>An insightful guest talk covering life after graduation, the transition from
+                                    university to the workplace, and practical advice for Data Science students.</p>
+                                <div class="speaker-bio">
+                                    <h3>Guest Speaker</h3>
+                                    <div class="speaker-info">
+                                        <strong>Addis Alemayehu</strong>
+                                        <p>First BSc Data Science graduate in Ethiopia, Bahir Dar University alumnus,
+                                            and currently an IT Officer at Birhan Bank.</p>
+                                        <a href="https://www.linkedin.com/in/addis-alemayehu-86870b29a/" target="_blank"
+                                            class="linkedin-link-compact">View LinkedIn Profile &rarr;</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="events-meta">
+                                <div class="meta-item"><span class="badge badge-completed">Session Ended</span></div>
+                                <div class="meta-item"><span class="meta-label">Host:</span> <span
+                                        class="meta-value">BNMIL</span></div>
+                                <div class="meta-item"><span class="meta-label">Topic:</span> <span
+                                        class="meta-value">Career Advice</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Event 3: Msge Talk -->
+                        <div class="events-card past-event" data-animate="fade-up">
+                            <div class="events-gallery-side">
+                                <div class="featured-image-container">
+                                    <div class="blur-bg"
+                                        style="background-image: url('photos/Events/Guest%20Talk/msge.jpg');"></div>
+                                    <img src="photos/Events/Guest%20Talk/msge.jpg" class="featured-image"
+                                        alt="Msge Desta at BNMIL">
+                                </div>
+                            </div>
+                            <div class="events-content">
+                                <p class="eyebrow">BNMIL Guest Talk</p>
+                                <h2>Exploring Data Science & AI Careers</h2>
+                                <p>An inspiring guest talk offering real-world insights into Data Science and AI
+                                    careers, perspectives from both academia and industry, and practical guidance for
+                                    students and early-career professionals.</p>
+                                <div class="speaker-bio">
+                                    <h3>Guest Speaker</h3>
+                                    <div class="speaker-info">
+                                        <strong>Msge Desta</strong>
+                                        <p>Data Scientist at SART Consult, AI Researcher, and Lecturer in AI & Data
+                                            Science. Holds an MSc in Artificial Intelligence & Data Science from Bahir
+                                            Dar University and is actively involved in data-driven projects supporting
+                                            development and humanitarian programs, as well as teaching and mentoring
+                                            students.</p>
+                                        <a href="https://www.linkedin.com/in/msge-desta" target="_blank"
+                                            class="linkedin-link-compact">View LinkedIn Profile &rarr;</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="events-meta">
+                                <div class="meta-item"><span class="badge badge-completed">Session Ended</span></div>
+                                <div class="meta-item"><span class="meta-label">Host:</span> <span
+                                        class="meta-value">BNMIL</span></div>
+                                <div class="meta-item"><span class="meta-label">Topic:</span> <span
+                                        class="meta-value">AI Industry</span></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="site-footer">
+                <div class="footer-container">
+                    <div class="footer-column footer-brand">
+                        <img src="photos/logo.png" alt="BNMIL logo" class="logo" />
+                        <h4>Blue Nile Machine Intelligence Lab</h4>
+                        <p>Empowering innovators through research and community.</p>
+                    </div>
+                </div>
+                <p class="footer-note">© <span id="current-year"></span> Blue Nile Machine Intelligence Lab. All rights
+                    reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="assets/js/navbar.js"></script>
+    <script src="assets/js/animations.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>
