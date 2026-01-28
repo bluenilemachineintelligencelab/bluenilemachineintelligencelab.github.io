@@ -1,25 +1,11 @@
 (function () {
   const initSmoothScroll = () => {
-    const nav = document.querySelector('.primary-nav');
-    const navHeight = nav ? nav.offsetHeight : 0;
-    const scrollOffset = navHeight + 20; // Add 20px padding
-
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener('click', (event) => {
-        const href = anchor.getAttribute('href');
-        if (href === '#') return;
-        
-        const target = document.querySelector(href);
+        const target = document.querySelector(anchor.getAttribute('href'));
         if (!target) return;
-        
         event.preventDefault();
-        
-        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - scrollOffset;
-        
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
+        target.scrollIntoView({ behavior: 'smooth' });
       });
     });
   };
@@ -29,60 +15,20 @@
     const navLinks = document.querySelectorAll('.primary-nav a[href^="#"]');
     if (!sections.length || !navLinks.length) return;
 
-    const nav = document.querySelector('.primary-nav');
-    const navHeight = nav ? nav.offsetHeight : 0;
-    const scrollOffset = navHeight + 100; // Offset for better detection
-
-    const updateActiveLink = () => {
-      let current = '';
-      const scrollPosition = window.scrollY + scrollOffset;
-
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-          current = `#${section.id}`;
-        }
-      });
-
-      navLinks.forEach((link) => {
-        const href = link.getAttribute('href');
-        link.classList.toggle('active', href === current);
-      });
-    };
-
-    // Use IntersectionObserver for better performance
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            updateActiveLink();
-          }
+          if (!entry.isIntersecting) return;
+          const activeId = `#${entry.target.id}`;
+          navLinks.forEach((link) => {
+            link.classList.toggle('active', link.getAttribute('href') === activeId);
+          });
         });
       },
-      { 
-        rootMargin: `-${scrollOffset}px 0px -60% 0px`,
-        threshold: 0.1
-      }
+      { rootMargin: '-40% 0px -40% 0px' }
     );
 
     sections.forEach((section) => observer.observe(section));
-    
-    // Also update on scroll for better accuracy
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateActiveLink();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
-
-    // Initial update
-    updateActiveLink();
   };
 
   const setCurrentYear = () => {
@@ -110,7 +56,7 @@
     const form = e.target;
     const submitButton = form.querySelector('button[type="submit"]');
     const originalText = submitButton.textContent;
-    
+
     // Get form data
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
@@ -123,10 +69,10 @@
     try {
       // In a real implementation, you would send this to your backend
       console.log('Contact form submission:', data);
-      
+
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // Show success message
       showFormMessage(form, 'Thank you! Your message has been sent. We will get back to you soon.', 'success');
       form.reset();
@@ -153,10 +99,10 @@
     try {
       // In a real implementation, you would send this to your backend
       console.log('Newsletter subscription:', email);
-      
+
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // Show success message
       showFormMessage(form, 'Thank you for subscribing! We will notify you of updates.', 'success');
       form.reset();
@@ -180,7 +126,7 @@
     messageEl.className = `form-message form-message--${type}`;
     messageEl.textContent = message;
     messageEl.setAttribute('role', 'alert');
-    
+
     // Insert message before submit button
     const submitButton = form.querySelector('button[type="submit"]');
     form.insertBefore(messageEl, submitButton);
@@ -194,12 +140,12 @@
   const initTeamImages = () => {
     const teamImages = document.querySelectorAll('.team-card img');
     const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.svg'];
-    
+
     teamImages.forEach((img) => {
       const originalSrc = img.getAttribute('src');
       const basePath = originalSrc.replace(/\.(jpg|jpeg|png|webp|svg)$/i, '');
       let currentExtensionIndex = 0;
-      
+
       // Try to load image with fallback extensions
       const tryLoadImage = () => {
         if (currentExtensionIndex >= imageExtensions.length) {
@@ -219,28 +165,28 @@
           }
           return;
         }
-        
+
         const testSrc = basePath + imageExtensions[currentExtensionIndex];
         const testImg = new Image();
-        
+
         testImg.onload = () => {
           img.src = testSrc;
           img.style.display = 'block';
         };
-        
+
         testImg.onerror = () => {
           currentExtensionIndex++;
           tryLoadImage();
         };
-        
+
         testImg.src = testSrc;
       };
-      
+
       // Check if current src fails
       img.addEventListener('error', () => {
         tryLoadImage();
       });
-      
+
       // Pre-check the image
       const checkImg = new Image();
       checkImg.onerror = () => {
@@ -253,6 +199,149 @@
     });
   };
 
+  const initEventGallery = () => {
+    const cards = document.querySelectorAll('.events-card');
+    cards.forEach((card) => {
+      const featured = card.querySelector('.featured-image');
+      const thumbs = card.querySelectorAll('.thumb-img');
+      if (!featured || !thumbs.length) return;
+
+      thumbs.forEach((thumb) => {
+        thumb.addEventListener('click', () => {
+          if (thumb.classList.contains('active')) return;
+
+          // Fade out current
+          featured.style.opacity = '0';
+          const blurBg = featured.previousElementSibling;
+          if (blurBg && blurBg.classList.contains('blur-bg')) {
+            blurBg.style.opacity = '0';
+          }
+
+          setTimeout(() => {
+            featured.src = thumb.src;
+            featured.alt = thumb.alt;
+            featured.style.opacity = '1';
+
+            if (blurBg && blurBg.classList.contains('blur-bg')) {
+              blurBg.style.backgroundImage = `url('${thumb.src}')`;
+              blurBg.style.opacity = '1';
+            }
+          }, 250);
+
+          // Update thumb states
+          thumbs.forEach((t) => t.classList.remove('active'));
+          thumb.classList.add('active');
+        });
+      });
+    });
+  };
+
+  const initLightbox = () => {
+    let currentGallery = [];
+    let currentIndex = 0;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'lightbox-overlay';
+    overlay.innerHTML = `
+      <div class="lightbox-content">
+        <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+        <button class="lightbox-nav lightbox-prev" aria-label="Previous image">&lt;</button>
+        <button class="lightbox-nav lightbox-next" aria-label="Next image">&gt;</button>
+        <img class="lightbox-img" src="" alt="Full view">
+        <div class="lightbox-caption"></div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const lightboxImg = overlay.querySelector('.lightbox-img');
+    const lightboxCaption = overlay.querySelector('.lightbox-caption');
+    const closeBtn = overlay.querySelector('.lightbox-close');
+    const prevBtn = overlay.querySelector('.lightbox-prev');
+    const nextBtn = overlay.querySelector('.lightbox-next');
+
+    const updateLightbox = () => {
+      const item = currentGallery[currentIndex];
+      lightboxImg.style.opacity = '0';
+
+      // Hide navigation if only one image
+      if (currentGallery.length <= 1) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+      } else {
+        prevBtn.style.display = 'flex';
+        nextBtn.style.display = 'flex';
+      }
+
+      setTimeout(() => {
+        lightboxImg.src = item.src;
+        lightboxImg.alt = item.alt;
+        lightboxCaption.textContent = item.alt;
+        lightboxImg.style.opacity = '1';
+      }, 150);
+    };
+
+    const openLightbox = (images, index) => {
+      currentGallery = images;
+      currentIndex = index;
+      updateLightbox();
+      overlay.classList.add('is-active');
+      document.body.classList.add('lightbox-open');
+    };
+
+    const nextImage = () => {
+      currentIndex = (currentIndex + 1) % currentGallery.length;
+      updateLightbox();
+    };
+
+    const prevImage = () => {
+      currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+      updateLightbox();
+    };
+
+    const closeLightbox = () => {
+      overlay.classList.remove('is-active');
+      document.body.classList.remove('lightbox-open');
+    };
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay || e.target === closeBtn) closeLightbox();
+      if (e.target === nextBtn) nextImage();
+      if (e.target === prevBtn) prevImage();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!overlay.classList.contains('is-active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    });
+
+    // Attach to event cards
+    document.querySelectorAll('.events-card').forEach(card => {
+      const featured = card.querySelector('.featured-image');
+      const thumbs = Array.from(card.querySelectorAll('.thumb-img'));
+
+      if (!featured) return;
+
+      featured.style.cursor = 'zoom-in';
+      featured.addEventListener('click', () => {
+        let images = [];
+        let activeIdx = 0;
+
+        if (thumbs.length > 0) {
+          images = thumbs.map(t => ({ src: t.src, alt: t.alt }));
+          activeIdx = thumbs.findIndex(t => t.classList.contains('active'));
+          if (activeIdx === -1) activeIdx = 0;
+        } else {
+          images = [{ src: featured.src, alt: featured.alt }];
+          activeIdx = 0;
+        }
+
+        openLightbox(images, activeIdx);
+      });
+    });
+  };
+
   document.addEventListener('DOMContentLoaded', () => {
     window.BNMILNavbar && window.BNMILNavbar.init();
     window.BNMILAnimations && window.BNMILAnimations.init();
@@ -261,5 +350,7 @@
     setCurrentYear();
     initForms();
     initTeamImages();
+    initEventGallery();
+    initLightbox();
   });
 })();
